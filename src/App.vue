@@ -20,7 +20,7 @@ import { io } from 'socket.io-client'
 const localVideo = ref(null)
 const remoteVideo = ref(null)
 
-const socket = io('http://192.168.1.106:3000') // 根據 signaling server 的 IP 設定
+const socket = io('https://signaling-server.onrender.com') // 根據 signaling server 的 IP 設定
 let localStream
 let peerConnection
 
