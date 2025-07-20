@@ -7,9 +7,14 @@
       <video ref="remoteVideo" autoplay playsinline class="w-64 h-48 bg-black rounded shadow"></video>
     </div>
 
-    <button @click="startCall" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-      開始視訊通話
-    </button>
+    <div class="flex gap-4 mt-6">
+      <button @click="startCall" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        開始視訊通話
+      </button>
+      <button @click="endCall" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+        結束通話
+      </button>
+    </div>
   </div>
 </template>
 
@@ -90,6 +95,28 @@ async function createPeerConnection() {
     }
   }
 }
+
+async function endCall() {
+  if (peerConnection) {
+    peerConnection.close()
+    peerConnection = null
+  }
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop())
+    localVideo.value.srcObject = null
+    remoteVideo.value.srcObject = null
+  }
+  socket.emit('end-call')
+}
+
+socket.on('end-call', () => {
+  endCall()
+})
+
+onBeforeUnmount(() => {
+  endCall()
+  socket.disconnect()
+})
 </script>
 
 <style scoped>
