@@ -125,10 +125,10 @@ socket.on('end-call', () => {
   endCall()
 })
 
-// onBeforeUnmount(() => {
-//   endCall()
-//   socket.disconnect()
-// })
+onBeforeUnmount(() => {
+  endCall()
+  socket.disconnect()
+})
 </script>
 
 <style scoped>
