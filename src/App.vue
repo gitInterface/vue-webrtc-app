@@ -97,26 +97,38 @@ async function createPeerConnection() {
 }
 
 async function endCall() {
-  if (peerConnection) {
-    peerConnection.close()
-    peerConnection = null
+  try {
+    // 關閉 PeerConnection
+    if (peerConnection) {
+      peerConnection.close()
+      peerConnection = null
+    }
+
+    // 停用本地串流
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop())
+      localStream = null
+    }
+
+    // 清空 video DOM 元素
+    if (localVideo.value) localVideo.value.srcObject = null
+    if (remoteVideo.value) remoteVideo.value.srcObject = null
+
+    // 通知其他用戶通話結束
+    socket.emit('end-call')
+  } catch (err) {
+    console.error('結束通話時發生錯誤：', err)
   }
-  if (localStream) {
-    localStream.getTracks().forEach(track => track.stop())
-    localVideo.value.srcObject = null
-    remoteVideo.value.srcObject = null
-  }
-  socket.emit('end-call')
 }
 
 socket.on('end-call', () => {
   endCall()
 })
 
-onBeforeUnmount(() => {
-  endCall()
-  socket.disconnect()
-})
+// onBeforeUnmount(() => {
+//   endCall()
+//   socket.disconnect()
+// })
 </script>
 
 <style scoped>
