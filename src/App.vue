@@ -1,19 +1,24 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-24 px-4">
+  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-4 relative">
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <div class="flex flex-col md:flex-row gap-4 flex-grow">
+    <!-- 視訊畫面：手機直排 / 桌機橫排 -->
+    <div class="flex flex-col lg:flex-row gap-4 flex-grow">
       <video ref="localVideo" autoplay playsinline muted
-        class="flex-1 h-[40vh] md:h-full bg-black rounded shadow"></video>
-      <video ref="remoteVideo" autoplay playsinline class="flex-1 h-[40vh] md:h-full bg-black rounded shadow"></video>
+        class="flex-1 h-[40vh] lg:h-full bg-black rounded-x1 shadow"></video>
+      <video ref="remoteVideo" autoplay playsinline
+        class="flex-1 h-[40vh] lg:h-full bg-black rounded-x1 shadow"></video>
     </div>
 
-    <!-- 按鈕固定在底部 -->
-    <div class="fixed bottom-0 left-0 w-full bg-white shadow-inner py-4 flex justify-center gap-4 z-50">
-      <button @click="startCall" class="px-8 py-3 text-lg bg-gray-600 text-white rounded hover:bg-gray-700">
+    <!-- 浮動按鈕列 -->
+    <div
+      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-6 py-4 rounded-full shadow-xl flex gap-4 z-50">
+      <button @click="startCall"
+        class="px-6 py-3 text-lg font-semibold bg-gray-700 text-white rounded-full hover:bg-gray-800 transition">
         📞 開啟通話
       </button>
-      <button @click="endCall" class="px-8 py-3 text-lg bg-red-600 text-white rounded hover:bg-red-700">
+      <button @click="endCall"
+        class="px-6 py-3 text-lg font-semibold bg-red-600 text-white rounded-full hover:bg-red-700 transition">
         🔕 結束通話
       </button>
     </div>
