@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/', // 通常設為根目錄即可
+  base: '', // 通常設為根目錄即可(保險起見)
   plugins: [
     vue(),
     vueDevTools(),
