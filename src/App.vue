@@ -3,8 +3,8 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-4 w-full max-w-6xl mx-auto px-4">
-      <div class="relative flex-[1_1_0%] aspect-video">
+    <div class="flex flex-col md:flex-row justify-center items-stretch w-full max-w-6xl mx-auto px-4 gap-4">
+      <div class="relative w-full md:w-[calc(50%-0.5rem)] aspect-video">
         <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
         <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
@@ -12,7 +12,7 @@
         </button>
       </div>
 
-      <div class="relative flex-[1_1_0%] aspect-video">
+      <div class="relative w-full md:w-[calc(50%-0.5rem)] aspect-video">
         <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
         <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
