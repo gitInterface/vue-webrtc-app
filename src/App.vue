@@ -44,9 +44,6 @@
   </div>
 </template>
 
-
-
-
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'
 import { io } from 'socket.io-client'
@@ -87,7 +84,13 @@ socket.on('ice-candidate', (candidate) => {
 
 async function startCall() {
   try {
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 560 },
+        height: { ideal: 315 }
+      },
+      audio: true
+    })
     localVideo.value.srcObject = localStream
     console.log('[media] 已取得攝影機與麥克風')
   } catch (err) {
