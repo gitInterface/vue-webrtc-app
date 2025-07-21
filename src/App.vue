@@ -2,9 +2,9 @@
   <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
     <h1 class="text-3xl font-bold mb-4">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <div class="flex flex-col md:flex-row gap-4">
-      <video ref="localVideo" autoplay playsinline muted class="w-64 h-48 bg-black rounded shadow"></video>
-      <video ref="remoteVideo" autoplay playsinline class="w-64 h-48 bg-black rounded shadow"></video>
+    <div class="flex flex-col md:flex-row gap-4 w-full h-[80vh]">
+      <video ref="localVideo" autoplay playsinline muted class="flex-1 h-full bg-black rounded shadow"></video>
+      <video ref="remoteVideo" autoplay playsinline class="flex-1 h-full bg-black rounded shadow"></video>
     </div>
 
     <div class="flex gap-4 mt-6">
