@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-4 w-full max-w-6xl mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full max-w-6xl mx-auto px-4">
       <div class="relative basis-1/2 min-w-0 aspect-video">
         <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
         <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
