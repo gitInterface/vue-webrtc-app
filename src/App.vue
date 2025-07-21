@@ -3,9 +3,8 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-4 w-full max-w-6xl mx-auto px-4">
-      <!-- 本地視訊 -->
-      <div class="relative w-full md:w-[48%] aspect-video min-w-0">
+    <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full max-w-6xl mx-auto px-4">
+      <div class="relative basis-1/2 min-w-0 aspect-video border border-red-500">
         <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
           muted></video>
         <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
@@ -14,8 +13,7 @@
         </button>
       </div>
 
-      <!-- 遠端視訊 -->
-      <div class="relative w-full md:w-[48%] aspect-video min-w-0">
+      <div class="relative basis-1/2 min-w-0 aspect-video border border-red-500">
         <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
           playsinline></video>
         <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
@@ -39,7 +37,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'
