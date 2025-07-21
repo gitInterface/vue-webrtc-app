@@ -2,24 +2,26 @@
   <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-4 relative">
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <!-- 視訊畫面：手機直排 / 中型螢幕桌機橫排 -->
-    <div class="flex flex-col md:flex-row gap-4 flex-grow">
-      <video ref="localVideo" autoplay playsinline muted
-        class="flex-1 h-[40vh] md:h-full bg-black rounded-xl shadow"></video>
-      <video ref="remoteVideo" autoplay playsinline
-        class="flex-1 h-[40vh] md:h-full bg-black rounded-xl shadow"></video>
+    <!-- 視訊畫面：手機直排 / 桌機橫排 -->
+    <div class="flex flex-row flex-wrap gap-4 w-full h-[80vh]">
+      <video ref="localVideo" class="w-1/2 h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
+      <video ref="remoteVideo" class="w-1/2 h-full bg-black rounded-xl shadow" autoplay playsinline></video>
     </div>
 
     <!-- 浮動按鈕列 -->
     <div
-      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-6 py-4 rounded-full shadow-xl flex gap-4 z-50">
+      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-5 rounded-full shadow-xl flex gap-6 z-50">
       <button @click="startCall"
-        class="px-6 py-3 text-lg font-semibold bg-gray-700 text-white rounded-full hover:bg-gray-800 transition">
+        class="px-8 py-4 text-xl font-semibold bg-gray-700 text-white rounded-full hover:bg-gray-800 transition">
         📞 開啟通話
       </button>
       <button @click="endCall"
-        class="px-6 py-3 text-lg font-semibold bg-red-600 text-white rounded-full hover:bg-red-700 transition">
+        class="px-8 py-4 text-xl font-semibold bg-red-600 text-white rounded-full hover:bg-red-700 transition">
         🔕 結束通話
+      </button>
+      <button @click="enterFullscreen"
+        class="px-8 py-4 text-xl font-semibold bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
+        🔢 全螢幕
       </button>
     </div>
   </div>
@@ -125,6 +127,17 @@ async function endCall() {
     socket.emit('end-call')
   } catch (err) {
     console.error('結束通話時發生錯誤：', err)
+  }
+}
+
+function enterFullscreen() {
+  const el = document.documentElement
+  if (el.requestFullscreen) {
+    el.requestFullscreen()
+  } else if (el.webkitRequestFullscreen) {
+    el.webkitRequestFullscreen()
+  } else if (el.msRequestFullscreen) {
+    el.msRequestFullscreen()
   }
 }
 
