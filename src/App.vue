@@ -3,36 +3,33 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面：手機直排 / 桌機橫排 -->
-    <div class="relative w-full md:w-1/2 h-[40vh] md:h-full">
-      <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
-      <button @click="enterFullscreen(localVideo.value)"
-        class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-sm px-3 py-1 rounded hover:bg-opacity-90">
-        ⛶ 全螢幕
-      </button>
+    <div class="flex flex-wrap md:flex-row w-full gap-4">
+      <div class="relative w-full md:w-1/2 h-[40vh] md:h-[60vh]">
+        <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
+        <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
+          class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
+          ⛶ 全螢幕
+        </button>
+      </div>
+      <div class="relative w-full md:w-1/2 h-[40vh] md:h-[60vh]">
+        <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
+        <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
+          class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
+          ⛶ 全螢幕
+        </button>
+      </div>
     </div>
-
-    <div class="relative w-full md:w-1/2 h-[40vh] md:h-full">
-      <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
-      <button @click="enterFullscreen(remoteVideo.value)"
-        class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-sm px-3 py-1 rounded hover:bg-opacity-90">
-        ⛶ 全螢幕
-      </button>
-    </div>
-
+    <div class="border-t border-dashed border-gray-300 w-screen absolute bottom-6 z-40"></div>
     <!-- 浮動按鈕列 -->
     <div
       class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-5 rounded-full shadow-xl flex gap-6 z-50">
       <button @click="startCall"
-        class="px-8 py-4 text-xl font-semibold bg-gray-700 text-white rounded-full hover:bg-gray-800 transition">
+        class="px-8 py-4 text-xl font-semibold bg-gradient-to-r from-green-500 to-green-700 text-white rounded-full shadow hover:from-green-600 hover:to-green-800 transition">
         📞 開啟通話
       </button>
       <button @click="endCall"
-        class="px-8 py-4 text-xl font-semibold bg-red-600 text-white rounded-full hover:bg-red-700 transition">
+        class="px-8 py-4 text-xl font-semibold bg-gradient-to-r from-red-500 to-red-700 text-white rounded-full shadow hover:from-red-600 hover:to-red-800 transition">
         🔕 結束通話
-      </button>
-      <button @click="enterFullscreen"
-        class="px-8 py-4 text-xl font-semibold bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
-        🔢 全螢幕
       </button>
     </div>
   </div>
