@@ -2,12 +2,12 @@
   <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-4 relative">
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <!-- 視訊畫面：手機直排 / 桌機橫排 -->
-    <div class="flex flex-col lg:flex-row gap-4 flex-grow">
+    <!-- 視訊畫面：手機直排 / 中型螢幕桌機橫排 -->
+    <div class="flex flex-col md:flex-row gap-4 flex-grow">
       <video ref="localVideo" autoplay playsinline muted
-        class="flex-1 h-[40vh] lg:h-full bg-black rounded-x1 shadow"></video>
+        class="flex-1 h-[40vh] md:h-full bg-black rounded-xl shadow"></video>
       <video ref="remoteVideo" autoplay playsinline
-        class="flex-1 h-[40vh] lg:h-full bg-black rounded-x1 shadow"></video>
+        class="flex-1 h-[40vh] md:h-full bg-black rounded-xl shadow"></video>
     </div>
 
     <!-- 浮動按鈕列 -->
