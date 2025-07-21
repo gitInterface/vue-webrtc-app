@@ -82,8 +82,8 @@ async function startCall() {
   try {
     localStream = await navigator.mediaDevices.getUserMedia({
       video: {
-        width: { ideal: 480 },
-        height: { ideal: 270 }
+        width: { ideal: 270 },
+        height: { ideal: 150 }
       },
       audio: true
     })
