@@ -4,16 +4,18 @@
 
     <!-- 視訊畫面 -->
     <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full max-w-6xl mx-auto px-4">
-      <div class="relative basis-1/2 min-w-0 aspect-video">
-        <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
+      <div class="relative basis-1/2 min-w-0 aspect-video border border-red-500">
+        <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
+          muted></video>
         <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
           ⛶ 全螢幕
         </button>
       </div>
 
-      <div class="relative basis-1/2 min-w-0 aspect-video">
-        <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
+      <div class="relative basis-1/2 min-w-0 aspect-video border border-red-500">
+        <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
+          playsinline></video>
         <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
           ⛶ 全螢幕
