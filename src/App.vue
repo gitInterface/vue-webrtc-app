@@ -3,9 +3,20 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面：手機直排 / 桌機橫排 -->
-    <div class="flex flex-row flex-wrap gap-4 w-full h-[80vh]">
-      <video ref="localVideo" class="w-1/2 h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
-      <video ref="remoteVideo" class="w-1/2 h-full bg-black rounded-xl shadow" autoplay playsinline></video>
+    <div class="relative w-full md:w-1/2 h-[40vh] md:h-full">
+      <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
+      <button @click="enterFullscreen(localVideo.value)"
+        class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-sm px-3 py-1 rounded hover:bg-opacity-90">
+        ⛶ 全螢幕
+      </button>
+    </div>
+
+    <div class="relative w-full md:w-1/2 h-[40vh] md:h-full">
+      <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
+      <button @click="enterFullscreen(remoteVideo.value)"
+        class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-sm px-3 py-1 rounded hover:bg-opacity-90">
+        ⛶ 全螢幕
+      </button>
     </div>
 
     <!-- 浮動按鈕列 -->
@@ -130,8 +141,8 @@ async function endCall() {
   }
 }
 
-function enterFullscreen() {
-  const el = document.documentElement
+function enterFullscreen(el) {
+  if (!el) return
   if (el.requestFullscreen) {
     el.requestFullscreen()
   } else if (el.webkitRequestFullscreen) {
