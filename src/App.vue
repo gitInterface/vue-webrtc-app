@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full max-w-full mx-auto px-0">
+    <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full px-0">
       <!-- 本地視訊 -->
       <div class="w-full flex justify-center">
         <div class="relative w-full md:w-[48%] max-w-[500px] aspect-video min-w-0">
