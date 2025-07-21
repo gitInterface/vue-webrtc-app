@@ -3,23 +3,23 @@
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面：手機直排 / 桌機橫排 -->
-    <div class="flex flex-wrap md:flex-row w-full">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 w-full">
       <div class="relative w-full md:w-[45%] h-[40vh] md:h-[60vh]">
-        <video ref="localVideo" class="w-[45%] h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
+        <video ref="localVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline muted></video>
         <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
           ⛶ 全螢幕
         </button>
       </div>
       <div class="relative w-full md:w-[45%] h-[40vh] md:h-[60vh]">
-        <video ref="remoteVideo" class="w-[45%] h-full bg-black rounded-xl shadow" autoplay playsinline></video>
+        <video ref="remoteVideo" class="w-full h-full bg-black rounded-xl shadow" autoplay playsinline></video>
         <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
           class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
           ⛶ 全螢幕
         </button>
       </div>
     </div>
-    <div class="border-t border-dashed border-gray-300 w-screen absolute bottom-6 z-40"></div>
+
     <!-- 浮動按鈕列 -->
     <div
       class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white px-10 py-6 rounded-full shadow-2xl flex gap-10 z-50">
