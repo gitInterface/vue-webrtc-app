@@ -1,7 +1,9 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col p-4">
     <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
-
+    <div class="text-3xl text-center text-green-600 bg-yellow-300 p-4">
+      Tailwind 有沒有載入？
+    </div>
     <!-- 視訊畫面 -->
     <div class="flex flex-row justify-center items-center gap-4 w-full  max-w-screen-lg mx-auto">
       <!-- 本地視訊 -->
