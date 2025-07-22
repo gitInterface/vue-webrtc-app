@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-4 relative">
+  <div class="min-h-screen bg-gray-100 flex flex-row pt-6 pb-32 px-4 relative">
     <h1 class="text-3xl font-bold mb-6 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
