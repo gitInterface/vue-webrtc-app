@@ -3,16 +3,15 @@
     <h1 class="text-3xl font-bold mb-6 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-row flex-wrap justify-center items-center gap-4 w-full max-w-none">
-
+    <div class="flex flex-row flex-wrap justify-evenly items-start gap-4 w-full">
       <!-- 本地視訊 -->
-      <div class="flex-1 max-w-[500px] aspect-video relative">
+      <div class="w-full sm:w-[45%] max-w-[480px] aspect-video relative">
         <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
           muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="flex-1 max-w-[500px] aspect-video relative">
+      <div class="w-full sm:w-[45%] max-w-[480px] aspect-video relative">
         <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
           playsinline></video>
       </div>
