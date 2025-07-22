@@ -162,7 +162,9 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped>
+<style>
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css');
+
 * {
   outline: 1px solid red;
 }
