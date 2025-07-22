@@ -1,31 +1,29 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-row pt-6 pb-32 px-4 relative">
-    <h1 class="text-3xl font-bold mb-6 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
+  <div class="min-h-screen bg-gray-100 flex flex-col p-4">
+    <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
     <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-2 px-2 w-full">
+    <div class="flex flex-row justify-center items-center gap-4 w-full max-w-screen-lg mx-auto">
       <!-- 本地視訊 -->
-      <div class="basis-1/2 aspect-video bg-red-300">
-        <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
-          muted></video>
+      <div class="flex-1 aspect-video bg-red-300 rounded overflow-hidden">
+        <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="basis-1/2 aspect-video bg-red-300">
-        <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
-          playsinline></video>
+      <div class="flex-1 aspect-video bg-blue-300 rounded overflow-hidden">
+        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
       </div>
     </div>
 
-    <!-- 浮動按鈕列 -->
+    <!-- 控制按鈕 -->
     <div
-      class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white px-10 py-6 rounded-full shadow-2xl flex gap-10 z-50">
+      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-md flex gap-6 z-50">
       <button @click="startCall"
-        class="w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
+        class="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white text-xl flex items-center justify-center shadow">
         📞開啟通話
       </button>
       <button @click="endCall"
-        class="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
+        class="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 text-white text-xl flex items-center justify-center shadow">
         🔕結束通話
       </button>
     </div>
