@@ -1,17 +1,18 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 relative">
-    <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
+  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-4 relative">
+    <h1 class="text-3xl font-bold mb-6 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <!-- 視訊畫面容器 -->
-    <div class="w-full max-w-none flex flex-col md:flex-row justify-center items-center gap-4 px-4">
+    <!-- 視訊畫面 -->
+    <div class="flex flex-row flex-wrap justify-center items-center gap-4 w-full max-w-none">
+
       <!-- 本地視訊 -->
-      <div class="w-full md:w-[45%] max-w-[460px] aspect-video relative">
+      <div class="flex-1 max-w-[500px] aspect-video relative">
         <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
           muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="w-full md:w-[45%] max-w-[460px] aspect-video relative">
+      <div class="flex-1 max-w-[500px] aspect-video relative">
         <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
           playsinline></video>
       </div>
@@ -21,9 +22,13 @@
     <div
       class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white px-10 py-6 rounded-full shadow-2xl flex gap-10 z-50">
       <button @click="startCall"
-        class="w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 text-white text-2xl flex items-center justify-center shadow-xl transition">📞開啟通話</button>
+        class="w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
+        📞開啟通話
+      </button>
       <button @click="endCall"
-        class="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center shadow-xl transition">🔕結束通話</button>
+        class="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
+        🔕結束通話
+      </button>
     </div>
   </div>
 </template>
@@ -70,8 +75,8 @@ async function startCall() {
   try {
     localStream = await navigator.mediaDevices.getUserMedia({
       video: {
-        width: { ideal: 270 },
-        height: { ideal: 150 }
+        width: { ideal: 480 },
+        height: { ideal: 270 }
       },
       audio: true
     })
