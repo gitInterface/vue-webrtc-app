@@ -1,27 +1,19 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 px-0 relative">
+  <div class="min-h-screen bg-gray-100 flex flex-col pt-6 pb-32 relative">
     <h1 class="text-3xl font-bold mb-4 text-center">🧑‍💻 Vue WebRTC 視訊通話</h1>
 
-    <!-- 視訊畫面 -->
-    <div class="flex flex-col md:flex-row justify-center items-stretch gap-0 w-full px-0">
+    <!-- 視訊畫面容器 -->
+    <div class="w-full max-w-none flex flex-col md:flex-row justify-center items-center gap-4 px-4">
       <!-- 本地視訊 -->
-      <div class="relative w-full md:w-[48%] max-w-[500px] aspect-video min-w-0">
-        <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow overflow-hidden" autoplay
-          playsinline muted></video>
-        <!-- <button v-if="localStream" @click="enterFullscreen(localVideo.value)"
-            class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
-            ⛶ 全螢幕
-          </button> -->
+      <div class="w-full md:w-[45%] max-w-[460px] aspect-video relative">
+        <video ref="localVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay playsinline
+          muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="relative w-full md:w-[48%] max-w-[500px] aspect-video min-w-0">
-        <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow overflow-hidden" autoplay
+      <div class="w-full md:w-[45%] max-w-[460px] aspect-video relative">
+        <video ref="remoteVideo" class="w-full h-full object-cover bg-black rounded-xl shadow" autoplay
           playsinline></video>
-        <!-- <button v-if="localStream" @click="enterFullscreen(remoteVideo.value)"
-            class="absolute bottom-2 right-2 bg-white bg-opacity-70 text-black text-base px-4 py-2 rounded-xl hover:bg-opacity-90 shadow transition">
-            ⛶ 全螢幕
-          </button> -->
       </div>
     </div>
 
@@ -29,13 +21,9 @@
     <div
       class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white px-10 py-6 rounded-full shadow-2xl flex gap-10 z-50">
       <button @click="startCall"
-        class="w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
-        📞
-      </button>
+        class="w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 text-white text-2xl flex items-center justify-center shadow-xl transition">📞開啟通話</button>
       <button @click="endCall"
-        class="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center shadow-xl transition">
-        🔕
-      </button>
+        class="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center shadow-xl transition">🔕結束通話</button>
     </div>
   </div>
 </template>
