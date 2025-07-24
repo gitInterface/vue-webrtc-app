@@ -153,12 +153,14 @@ async function endCall() {
 
 function enterFullscreen(el) {
   if (!el) return
-  if (el.requestFullscreen) {
-    el.requestFullscreen()
-  } else if (el.webkitRequestFullscreen) {
-    el.webkitRequestFullscreen()
-  } else if (el.msRequestFullscreen) {
-    el.msRequestFullscreen()
+  // 先嘗試播放
+  const playPromise = el.play?.()
+  if (playPromise) {
+    playPromise.then(() => {
+      if (el.requestFullscreen) el.requestFullscreen()
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
+      else if (el.msRequestFullscreen) el.msRequestFullscreen()
+    }).catch(err => console.warn('播放失敗:', err))
   }
 }
 
