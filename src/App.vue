@@ -9,7 +9,7 @@
         <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
       </div>
       <!-- 遠端視訊 -->
-      <div class="flex-1 border box-border">
+      <div class="aspect-video flex-1 border box-border">
         <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
           @dblclick="enterFullscreen($event.target)"></video>
       </div>
