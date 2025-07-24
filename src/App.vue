@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { io } from 'socket.io-client'
 
 const localVideo = ref(null)
