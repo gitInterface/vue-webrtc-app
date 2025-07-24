@@ -20,7 +20,10 @@ export default defineConfig({
     },
   },
   server: {
+    hmr: {
+      overlay: false // ❌ 關閉錯誤浮球
+    },
     host: '0.0.0.0', // ⬅️ 讓其他裝置（如手機）也能連進來
-    port: 5173
+    port: 5173,
   }
 })

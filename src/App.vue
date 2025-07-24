@@ -1,21 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col p-4 relative">
+  <div class="min-h-screen bg-gray-100 flex flex-col p-0 m-0 relative">
     <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
     <!-- 視訊畫面 -->
-    <div class="w-screen h-screen flex">
+    <div class="w-screen h-screen flex box-border">
       <!-- 本地視訊 -->
-      <div class="w-1/2 h-full border border-red-500 bg-black">
+      <div class="basis-[47%] h-full border box-border">
         <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="w-1/2 h-full border border-blue-500 bg-black">
+      <div class="basis-[48%] h-full border box-border">
         <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
       </div>
     </div>
 
     <!-- 控制按鈕 -->
-    <div class="self-center mt-8 bg-white px-8 py-4 rounded-full shadow-md flex gap-6 z-50">
+    <div class="self-center mt-8 bg-white px-8 py-4 rounded-full shadow-md flex gap-6 z-100">
       <button @click="startCall"
         class="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white text-xl flex items-center justify-center shadow">
         📞開啟通話
