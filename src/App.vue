@@ -6,11 +6,11 @@
     <div v-if="isMobile" class="w-screen h-screen flex flex-col box-border">
       <!-- 本地視訊 -->
       <div class="flex-1 border box-border">
-        <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
+        <video ref="localVideo" class="w-full h-full" autoplay playsinline muted></video>
       </div>
       <!-- 遠端視訊 -->
       <div class="flex-1 border box-border">
-        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
+        <video ref="remoteVideo" class="w-full h-full" autoplay playsinline
           @click="toggleFullscreen($event.target)"></video>
       </div>
     </div>
@@ -19,12 +19,12 @@
     <div v-else class="w-screen h-screen flex box-border">
       <!-- 本地視訊 -->
       <div class="basis-[47%] h-full border box-border">
-        <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
+        <video ref="localVideo" class="w-full h-full" autoplay playsinline muted></video>
       </div>
 
       <!-- 遠端視訊 -->
       <div class="basis-[48%] h-full border box-border">
-        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
+        <video ref="remoteVideo" class="w-full h-full" autoplay playsinline
           @dblclick="enterFullscreen($event.target)"></video>
       </div>
     </div>
@@ -181,27 +181,24 @@ async function toggleFullscreen(el) {
 
   try {
     if (!document.fullscreenElement) {
-      if (!el.srcObject) el.srcObject = stream;
-      await el.play(); // 這裡用 await
-      requestFullscreen.call(el);
+      // 🔒 播放之前先確保 srcObject 正確
+      el.srcObject = stream;
+      el.muted = true; // 避免 Android 靜音政策問題
+      el.setAttribute('playsinline', true);
 
-      const restore = () => {
-        if (!el.srcObject && stream) {
-          el.srcObject = stream;
-          el.play().catch(() => { });
-        }
-      };
+      // ✅ 等待播放完成
+      await el.play();
 
-      document.addEventListener('fullscreenchange', restore, { once: true });
-      document.addEventListener('webkitfullscreenchange', restore, { once: true });
-      document.addEventListener('mozfullscreenchange', restore, { once: true });
+      // ✅ 再進入全螢幕
+      await requestFullscreen.call(el);
     } else {
-      exitFullscreen.call(document);
+      await exitFullscreen.call(document);
     }
   } catch (err) {
     console.error('播放或全螢幕失敗:', err);
   }
 }
+
 
 
 
@@ -225,6 +222,7 @@ onMounted(() => {
 
 <style scoped>
 video {
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 </style>
