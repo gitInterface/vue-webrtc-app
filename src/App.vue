@@ -228,6 +228,7 @@ onMounted(() => {
 
 <style scoped>
 video {
-  object-fit: cover;
+  object-fit: contain !important;
+  background-color: black;
 }
 </style>
