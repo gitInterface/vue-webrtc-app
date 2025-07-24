@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100 flex flex-col p-0 m-0 relative">
     <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
     <!-- 視訊畫面 -->
-    <div class="w-screen h-screen flex box-border">
+    <div v-if="isMobile" class="w-screen h-screen flex box-border">
       <!-- 本地視訊 -->
       <div class="basis-[47%] h-full border box-border">
         <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
@@ -35,6 +35,7 @@ import { io } from 'socket.io-client'
 
 const localVideo = ref(null)
 const remoteVideo = ref(null)
+const isMobile = ref(false)
 
 const socket = io('https://signaling-server-8zqh.onrender.com') // 根據 signaling server 的 IP 設定
 let localStream
@@ -153,6 +154,13 @@ socket.on('end-call', () => {
 onBeforeUnmount(() => {
   endCall()
   socket.disconnect()
+})
+
+onMounted(() => {
+  isMobile.value = window.innerWidth <= 768
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth <= 768
+  })
 })
 </script>
 
