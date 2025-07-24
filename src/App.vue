@@ -169,43 +169,36 @@ function enterFullscreen(el) {
 }
 
 function toggleFullscreen(el) {
-  if (!el) return
-  const stream = el.srcObject
-  if (!stream) {
-    console.warn('無 stream，無法進入全螢幕')
-    return
-  }
-
-  const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen
-  const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen
+  if (!el) return;
+  const stream = el.srcObject;
+  const reqFs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  const exitFs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 
   if (!document.fullscreenElement) {
-    // 若沒有全螢幕，就先播放再進入
-    el.play()
-      .then(() => {
-        requestFullscreen.call(el)
-      })
-      .catch(err => {
-        console.error('播放失敗:', err)
-      })
+    if (!el.srcObject) el.srcObject = stream;
 
-    // 加上 fullscreenchange 監聽，**一律更新 srcObject 並 replay**
-    const restoreStream = () => {
-      if (!el.srcObject) {
-        el.srcObject = stream
-        el.play().catch(() => { }) // 播放錯誤就忽略
+    el.play().then(() => {
+      reqFs.call(el);
+    }).catch(err => {
+      console.error('播放失敗:', err);
+    });
+
+    const restore = () => {
+      if (!el.srcObject && stream) {
+        el.srcObject = stream;
+        el.play().catch(() => { });
       }
-      document.removeEventListener('fullscreenchange', restoreStream)
-      document.removeEventListener('webkitfullscreenchange', restoreStream)
-    }
+    };
 
-    document.addEventListener('fullscreenchange', restoreStream)
-    document.addEventListener('webkitfullscreenchange', restoreStream)
+    // 同時監聽全螢幕事件
+    document.addEventListener('fullscreenchange', restore, { once: true });
+    document.addEventListener('webkitfullscreenchange', restore, { once: true });
+    document.addEventListener('mozfullscreenchange', restore, { once: true });
   } else {
-    // 已在全螢幕，則退出
-    exitFullscreen.call(document)
+    exitFs.call(document);
   }
 }
+
 
 
 
@@ -228,7 +221,6 @@ onMounted(() => {
 
 <style scoped>
 video {
-  object-fit: contain !important;
-  background-color: black;
+  object-fit: cover;
 }
 </style>
