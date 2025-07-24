@@ -10,7 +10,8 @@
       </div>
       <!-- 遠端視訊 -->
       <div class="flex-1 border box-border">
-        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
+        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
+          @dblclick="enterFullscreen($event.target)"></video>
       </div>
     </div>
 
@@ -23,7 +24,8 @@
 
       <!-- 遠端視訊 -->
       <div class="basis-[48%] h-full border box-border">
-        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
+        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
+          @dblclick="enterFullscreen($event.target)"></video>
       </div>
     </div>
 
