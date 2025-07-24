@@ -168,30 +168,38 @@ function toggleFullscreen(el) {
   if (!el) return
   const stream = el.srcObject
 
+  // 若沒有全螢幕就進入
   if (!document.fullscreenElement) {
-    // 進入全螢幕
-    el.play().then(() => {
-      if (el.requestFullscreen) el.requestFullscreen()
-      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
-      else if (el.msRequestFullscreen) el.msRequestFullscreen()
-    }).catch(err => {
-      console.error('播放或全螢幕失敗', err)
-    })
+    // 保險起見先設定 srcObject（有些手機會 reset）
+    if (!el.srcObject && stream) el.srcObject = stream
+
+    // 播放後再請求全螢幕，否則會被視為非使用者觸發而被擋
+    el.play()
+      .then(() => {
+        const request = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen
+        if (request) request.call(el)
+      })
+      .catch(err => {
+        console.error('播放失敗:', err)
+      })
+
+    // 防止進入全螢幕後 srcObject 被清除
+    const restore = () => {
+      if (!el.srcObject && stream) {
+        el.srcObject = stream
+        el.play().catch(() => { }) // 播放失敗就算了
+      }
+    }
+
+    document.addEventListener('fullscreenchange', restore, { once: true })
+    document.addEventListener('webkitfullscreenchange', restore, { once: true })
   } else {
     // 離開全螢幕
-    if (document.exitFullscreen) document.exitFullscreen()
-    else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
-    else if (document.msExitFullscreen) document.msExitFullscreen()
+    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen
+    if (exit) exit.call(document)
   }
-
-  // 手機 bug 修補：重新掛上 stream
-  document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement === el && !el.srcObject && stream) {
-      el.srcObject = stream
-      el.play()
-    }
-  })
 }
+
 
 socket.on('end-call', () => {
   endCall()
