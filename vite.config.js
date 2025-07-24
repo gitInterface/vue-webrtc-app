@@ -12,7 +12,7 @@ export default defineConfig({
     vueDevTools(),
   ],
   css: {
-    postcss: './postcss.config.js'
+    postcss: './postcss.config.js',
   },
   resolve: {
     alias: {

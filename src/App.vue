@@ -1,25 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col p-4">
+  <div class="min-h-screen bg-gray-100 flex flex-col p-4 relative">
     <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
-    <div class="text-3xl text-center text-green-600 bg-yellow-300 p-4">
-      Tailwind 有沒有載入？
-    </div>
     <!-- 視訊畫面 -->
-    <div class="flex flex-row justify-center items-center gap-4 w-full  max-w-screen-lg mx-auto">
+    <div class="w-screen h-screen flex">
       <!-- 本地視訊 -->
-      <div class="w-1/2 aspect-video border border-red-500 bg-black">
+      <div class="w-1/2 h-full border border-red-500 bg-black">
         <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
       </div>
 
       <!-- 遠端視訊 -->
-      <div class="w-1/2 aspect-video border border-blue-500 bg-black">
+      <div class="w-1/2 h-full border border-blue-500 bg-black">
         <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
       </div>
     </div>
 
     <!-- 控制按鈕 -->
-    <div
-      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-md flex gap-6 z-50">
+    <div class="self-center mt-8 bg-white px-8 py-4 rounded-full shadow-md flex gap-6 z-50">
       <button @click="startCall"
         class="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white text-xl flex items-center justify-center shadow">
         📞開啟通話
@@ -30,6 +26,7 @@
       </button>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -73,10 +70,7 @@ socket.on('ice-candidate', (candidate) => {
 async function startCall() {
   try {
     localStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        width: { ideal: 480 },
-        height: { ideal: 270 }
-      },
+      video: true,
       audio: true
     })
     localVideo.value.srcObject = localStream
@@ -163,10 +157,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-* {
-  outline: 1px solid red;
-}
-
 video {
   object-fit: cover;
 }
