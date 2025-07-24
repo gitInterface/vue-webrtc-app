@@ -102,6 +102,10 @@ async function startCall() {
     peerConnection.addTrack(track, localStream)
   })
 
+  if (remoteVideo.value && remoteVideo.value.srcObject !== null) {
+    remoteVideo.value.srcObject = null // 清空後重新綁定可避免記憶體錯誤
+  }
+
   const offer = await peerConnection.createOffer()
   await peerConnection.setLocalDescription(offer)
   socket.emit('offer', offer)
@@ -167,38 +171,42 @@ function enterFullscreen(el) {
 function toggleFullscreen(el) {
   if (!el) return
   const stream = el.srcObject
+  if (!stream) {
+    console.warn('無 stream，無法進入全螢幕')
+    return
+  }
 
-  // 若沒有全螢幕就進入
+  const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen
+  const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen
+
   if (!document.fullscreenElement) {
-    // 保險起見先設定 srcObject（有些手機會 reset）
-    if (!el.srcObject && stream) el.srcObject = stream
-
-    // 播放後再請求全螢幕，否則會被視為非使用者觸發而被擋
+    // 若沒有全螢幕，就先播放再進入
     el.play()
       .then(() => {
-        const request = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen
-        if (request) request.call(el)
+        requestFullscreen.call(el)
       })
       .catch(err => {
         console.error('播放失敗:', err)
       })
 
-    // 防止進入全螢幕後 srcObject 被清除
-    const restore = () => {
-      if (!el.srcObject && stream) {
+    // 加上 fullscreenchange 監聽，**一律更新 srcObject 並 replay**
+    const restoreStream = () => {
+      if (!el.srcObject) {
         el.srcObject = stream
-        el.play().catch(() => { }) // 播放失敗就算了
+        el.play().catch(() => { }) // 播放錯誤就忽略
       }
+      document.removeEventListener('fullscreenchange', restoreStream)
+      document.removeEventListener('webkitfullscreenchange', restoreStream)
     }
 
-    document.addEventListener('fullscreenchange', restore, { once: true })
-    document.addEventListener('webkitfullscreenchange', restore, { once: true })
+    document.addEventListener('fullscreenchange', restoreStream)
+    document.addEventListener('webkitfullscreenchange', restoreStream)
   } else {
-    // 離開全螢幕
-    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen
-    if (exit) exit.call(document)
+    // 已在全螢幕，則退出
+    exitFullscreen.call(document)
   }
 }
+
 
 
 socket.on('end-call', () => {
