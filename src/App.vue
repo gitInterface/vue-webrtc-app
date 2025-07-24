@@ -168,34 +168,38 @@ function enterFullscreen(el) {
   }
 }
 
-function toggleFullscreen(el) {
+async function toggleFullscreen(el) {
   if (!el) return;
   const stream = el.srcObject;
-  const reqFs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-  const exitFs = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+  if (!stream) {
+    console.warn('無 stream，無法進入全螢幕');
+    return;
+  }
 
-  if (!document.fullscreenElement) {
-    if (!el.srcObject) el.srcObject = stream;
+  const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 
-    el.play().then(() => {
-      reqFs.call(el);
-    }).catch(err => {
-      console.error('播放失敗:', err);
-    });
+  try {
+    if (!document.fullscreenElement) {
+      if (!el.srcObject) el.srcObject = stream;
+      await el.play(); // 這裡用 await
+      requestFullscreen.call(el);
 
-    const restore = () => {
-      if (!el.srcObject && stream) {
-        el.srcObject = stream;
-        el.play().catch(() => { });
-      }
-    };
+      const restore = () => {
+        if (!el.srcObject && stream) {
+          el.srcObject = stream;
+          el.play().catch(() => { });
+        }
+      };
 
-    // 同時監聽全螢幕事件
-    document.addEventListener('fullscreenchange', restore, { once: true });
-    document.addEventListener('webkitfullscreenchange', restore, { once: true });
-    document.addEventListener('mozfullscreenchange', restore, { once: true });
-  } else {
-    exitFs.call(document);
+      document.addEventListener('fullscreenchange', restore, { once: true });
+      document.addEventListener('webkitfullscreenchange', restore, { once: true });
+      document.addEventListener('mozfullscreenchange', restore, { once: true });
+    } else {
+      exitFullscreen.call(document);
+    }
+  } catch (err) {
+    console.error('播放或全螢幕失敗:', err);
   }
 }
 
