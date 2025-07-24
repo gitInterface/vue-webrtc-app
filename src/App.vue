@@ -11,7 +11,7 @@
       <!-- 遠端視訊 -->
       <div class="aspect-video flex-1 border box-border">
         <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline
-          @dblclick="enterFullscreen($event.target)"></video>
+          @click="toggleFullscreen($event.target)"></video>
       </div>
     </div>
 
@@ -162,6 +162,35 @@ function enterFullscreen(el) {
       else if (el.msRequestFullscreen) el.msRequestFullscreen()
     }).catch(err => console.warn('播放失敗:', err))
   }
+}
+
+function toggleFullscreen(el) {
+  if (!el) return
+  const stream = el.srcObject
+
+  if (!document.fullscreenElement) {
+    // 進入全螢幕
+    el.play().then(() => {
+      if (el.requestFullscreen) el.requestFullscreen()
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
+      else if (el.msRequestFullscreen) el.msRequestFullscreen()
+    }).catch(err => {
+      console.error('播放或全螢幕失敗', err)
+    })
+  } else {
+    // 離開全螢幕
+    if (document.exitFullscreen) document.exitFullscreen()
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
+    else if (document.msExitFullscreen) document.msExitFullscreen()
+  }
+
+  // 手機 bug 修補：重新掛上 stream
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement === el && !el.srcObject && stream) {
+      el.srcObject = stream
+      el.play()
+    }
+  })
 }
 
 socket.on('end-call', () => {
