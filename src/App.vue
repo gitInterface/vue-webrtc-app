@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col p-0 m-0 relative">
-    <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
+    <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻Vue WebRTC 視訊通話(雙擊進入全螢幕)</h1>
 
     <!-- 手機（上下排列） -->
     <div v-if="isMobile" class="w-screen h-screen flex flex-col box-border">
