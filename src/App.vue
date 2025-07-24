@@ -1,8 +1,21 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col p-0 m-0 relative">
     <h1 class="text-2xl font-bold text-center mb-6">🧑‍💻 Vue WebRTC 視訊通話</h1>
-    <!-- 視訊畫面 -->
-    <div v-if="isMobile" class="w-screen h-screen flex box-border">
+
+    <!-- 手機（上下排列） -->
+    <div v-if="isMobile" class="w-screen h-screen flex flex-col box-border">
+      <!-- 本地視訊 -->
+      <div class="flex-1 border box-border">
+        <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
+      </div>
+      <!-- 遠端視訊 -->
+      <div class="flex-1 border box-border">
+        <video ref="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
+      </div>
+    </div>
+
+    <!-- 桌機視訊畫面 -->
+    <div v-else class="w-screen h-screen flex box-border">
       <!-- 本地視訊 -->
       <div class="basis-[47%] h-full border box-border">
         <video ref="localVideo" class="w-full h-full object-cover" autoplay playsinline muted></video>
