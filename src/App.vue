@@ -155,20 +155,29 @@ async function endCall() {
   }
 }
 
+let fullscreenLock = false;
+
 function enterFullscreen(el) {
-  if (!el) return;
+  if (!el || fullscreenLock) return;
+  fullscreenLock = true; // 上鎖，避免重複執行
 
   const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
 
-  // 嘗試先播放（必要）
   el.play().then(() => {
     if (screen.orientation && screen.orientation.lock) {
-      screen.orientation.lock("portrait").catch(() => { }); // 嘗試鎖定為直向
+      screen.orientation.lock("portrait").catch(() => { });
     }
     setTimeout(() => {
       requestFullscreen.call(el);
-    }, 100); // 延遲 100ms 再進入全螢幕
-  }).catch(err => console.warn('播放失敗:', err));
+      // 進入全螢幕後釋放鎖定（加個保險延遲）
+      setTimeout(() => {
+        fullscreenLock = false;
+      }, 1000);
+    }, 100);
+  }).catch(err => {
+    console.warn('播放失敗:', err);
+    fullscreenLock = false; // 發生錯誤釋放鎖
+  });
 }
 
 async function toggleFullscreen(el) {
