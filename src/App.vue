@@ -159,7 +159,14 @@ function enterFullscreen(el) {
   if (!el) return;
 
   const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-  requestFullscreen.call(el); // 不先播放
+
+  // 嘗試先播放（必要）
+  el.play().then(() => {
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock("portrait").catch(() => { }); // 嘗試鎖定為直向
+    }
+    requestFullscreen.call(el);
+  }).catch(err => console.warn('播放失敗:', err));
 }
 
 async function toggleFullscreen(el) {
