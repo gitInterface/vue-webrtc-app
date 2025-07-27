@@ -11,7 +11,7 @@
       <!-- 遠端視訊 -->
       <div class="flex-1 border box-border">
         <video ref="remoteVideo" class="w-full h-full" autoplay playsinline
-          @click="toggleFullscreen($event.target)"></video>
+          @click="enterFullscreen($event.target)"></video>
       </div>
     </div>
 
@@ -180,36 +180,36 @@ function enterFullscreen(el) {
   });
 }
 
-async function toggleFullscreen(el) {
-  if (!el) return;
-  const stream = el.srcObject;
-  if (!stream) {
-    console.warn('無 stream，無法進入全螢幕');
-    return;
-  }
+// async function toggleFullscreen(el) {
+//   if (!el) return;
+//   const stream = el.srcObject;
+//   if (!stream) {
+//     console.warn('無 stream，無法進入全螢幕');
+//     return;
+//   }
 
-  const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-  const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+//   const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+//   const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 
-  try {
-    if (!document.fullscreenElement) {
-      // 🔒 播放之前先確保 srcObject 正確
-      el.srcObject = stream;
-      el.muted = true; // 避免 Android 靜音政策問題
-      el.setAttribute('playsinline', true);
+//   try {
+//     if (!document.fullscreenElement) {
+//       // 🔒 播放之前先確保 srcObject 正確
+//       el.srcObject = stream;
+//       el.muted = true; // 避免 Android 靜音政策問題
+//       el.setAttribute('playsinline', true);
 
-      // ✅ 等待播放完成
-      await el.play();
+//       // ✅ 等待播放完成
+//       await el.play();
 
-      // ✅ 再進入全螢幕
-      await requestFullscreen.call(el);
-    } else {
-      await exitFullscreen.call(document);
-    }
-  } catch (err) {
-    console.error('播放或全螢幕失敗:', err);
-  }
-}
+//       // ✅ 再進入全螢幕
+//       await requestFullscreen.call(el);
+//     } else {
+//       await exitFullscreen.call(document);
+//     }
+//   } catch (err) {
+//     console.error('播放或全螢幕失敗:', err);
+//   }
+// }
 
 
 
