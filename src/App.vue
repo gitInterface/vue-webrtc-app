@@ -165,7 +165,9 @@ function enterFullscreen(el) {
     if (screen.orientation && screen.orientation.lock) {
       screen.orientation.lock("portrait").catch(() => { }); // 嘗試鎖定為直向
     }
-    requestFullscreen.call(el);
+    setTimeout(() => {
+      requestFullscreen.call(el);
+    }, 100); // 延遲 100ms 再進入全螢幕
   }).catch(err => console.warn('播放失敗:', err));
 }
 
