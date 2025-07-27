@@ -156,16 +156,10 @@ async function endCall() {
 }
 
 function enterFullscreen(el) {
-  if (!el) return
-  // 先嘗試播放
-  const playPromise = el.play?.()
-  if (playPromise) {
-    playPromise.then(() => {
-      if (el.requestFullscreen) el.requestFullscreen()
-      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
-      else if (el.msRequestFullscreen) el.msRequestFullscreen()
-    }).catch(err => console.warn('播放失敗:', err))
-  }
+  if (!el) return;
+
+  const requestFullscreen = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  requestFullscreen.call(el); // 不先播放
 }
 
 async function toggleFullscreen(el) {
